@@ -1,25 +1,46 @@
 const handleCtagory = async ()=>
 
 {
-    // console.log("adnan-1");
+    
+   
 
     const response = await fetch("https://openapi.programming-hero.com/api/news/categories");
 
     const data=await response.json();
 
-    console.log(data);
+    const tabContainer=document.getElementById('tab-container');
 
+    data.data.news_category.slice(0,3).forEach(catagory=>
+        {
+            const div=document.createElement('div');
+            div.className="tabs flex justify-center mt-10"
+            div.innerHTML=`
+           
+            <a onclick="handleLoadNews('${catagory.category_id}')" class="tab ">${catagory.category_name}</a> `
 
+          tabContainer.appendChild(div);
 
-//    .then(res=>res.json())
-//    .then(data =>console.log(data))
-//    .catch(err=> console.log(err))
+        })
 
+     console.log(data.data.news_category);
 
+ 
 
-  
-
-    // console.log("adnan-02");
 }
+const handleLoadNews = async ( catagoryId)=>
+    {
+        const response=await fetch(`https://openapi.programming-hero.com/api/news/category/${catagoryId}`)
 
-handleCtagory();
+        const data=await response.json();
+
+        console.log(data.data);
+
+
+
+    };
+
+
+
+
+
+     handleCtagory();
